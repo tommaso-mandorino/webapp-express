@@ -31,18 +31,35 @@ server.get('/',
 
     (request, response) => {
 
-        let clientIp = request.ip;
-
-        if (clientIp.startsWith('::ffff:'))
-            clientIp = clientIp.replace('::ffff:', '');
-
-        console.log(`➕ New visit to the 'root' route from IP: ${clientIp}.`);
+        console.log(`➕ New request on 'root' route from IP: ${request.ip}.`);
 
         response.send('Welcome to the server!');
 
     }
 
 );
+
+server.get('/api/',
+    
+    (request, response) => {
+
+        console.log(`➕ New request on 'index' route from IP: ${request.ip}.`)
+
+        const indexQuery = 'SELECT * FROM `movies`';
+
+        mysqlConnection.query(indexQuery,
+            
+            (error, result) => {
+
+                response.json(result);
+
+            }
+
+        )
+
+    }
+
+)
 
 
 
