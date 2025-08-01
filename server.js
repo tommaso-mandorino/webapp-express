@@ -10,6 +10,8 @@ const SERVER_PORT = process.env.SERVER_PORT;
 
 const server = express();
 
+server.use(express.static('public'));
+
 
 
 const mysqlConnectionInformation = {
@@ -38,6 +40,8 @@ server.get('/',
     }
 
 );
+
+
 
 server.get('/api/',
     
