@@ -45,13 +45,53 @@ server.get('/api/',
 
         console.log(`➕ New request on 'index' route from IP: ${request.ip}.`)
 
-        const indexQuery = 'SELECT * FROM `movies`';
-
-        mysqlConnection.query(indexQuery,
+        mysqlConnection.query(
+            
+            'SELECT * FROM `movies`;',
             
             (error, result) => {
 
                 response.json(result);
+
+            }
+
+        )
+
+    }
+
+)
+
+
+
+server.get('/api/:id',
+
+    (request, response) => {
+
+        console.log(`➕ New request on 'show' route for resource with ID '${request.params.id}' from IP: ${request.ip}.`)
+
+        mysqlConnection.query(
+            
+            'SELECT * FROM `movies` WHERE `movies`.`id` = ?;',
+            
+            [request.params.id],
+
+            (error, movie) => {
+
+                mysqlConnection.query(
+
+                    'SELECT * FROM `reviews` WHERE `reviews`.`movie_id` = ?;',
+
+                    [request.params.id],
+
+                    (error, reviews) => {
+
+                        movie[0].reviews = reviews;
+
+                        response.json(movie[0]);
+
+                    }
+
+                )
 
             }
 
