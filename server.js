@@ -15,9 +15,9 @@ server.use(express.static('public'));
 
 
 const mysqlConnectionInformation = {
-    user: 'root',
-    password: 'root',
-    database: 'webapp-express'
+    user: process.env.DBMS_USER,
+    password: process.env.DBMS_PASSWORD,
+    database: process.env.DBMS_USE
 }
 
 const mysqlConnection = new mysql2.createConnection(mysqlConnectionInformation);
