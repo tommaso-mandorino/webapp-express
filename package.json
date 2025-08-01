@@ -1,0 +1,27 @@
+{
+  "name": "webapp-express",
+  "version": "1.0.0",
+  "description": "Costruire il `back-end` di una `web app`.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env server.js",
+    "dev": "node --env-file=.env --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tommaso-mandorino/webapp-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/tommaso-mandorino/webapp-express/issues"
+  },
+  "homepage": "https://github.com/tommaso-mandorino/webapp-express#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0"
+  }
+}
