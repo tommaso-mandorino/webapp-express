@@ -2,6 +2,8 @@ import express from 'express';
 
 import movieRouter from './routers/movieRouter.js';
 
+import routeNotFound from './middlewares/errors/routeNotFound.js';
+
 const SERVER_ADDRESS = process.env.SERVER_ADDRESS;
 const SERVER_PORT = process.env.SERVER_PORT;
 
@@ -23,6 +25,10 @@ server.get('/',
     }
 
 );
+
+
+
+server.use(routeNotFound);
 
 
 
