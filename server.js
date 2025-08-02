@@ -1,6 +1,7 @@
 import express from 'express';
 import mysql2 from 'mysql2';
 
+import moviesController from './controllers/moviesController.js';
 
 
 const SERVER_ADDRESS = process.env.SERVER_ADDRESS;
@@ -43,67 +44,8 @@ server.get('/',
 
 
 
-server.get('/api/',
-    
-    (request, response) => {
-
-        console.log(`➕ New request on 'index' route from IP: ${request.ip}.`)
-
-        mysqlConnection.query(
-            
-            'SELECT * FROM `movies`;',
-            
-            (error, result) => {
-
-                response.json(result);
-
-            }
-
-        )
-
-    }
-
-)
-
-
-
-server.get('/api/:id',
-
-    (request, response) => {
-
-        console.log(`➕ New request on 'show' route for resource with ID '${request.params.id}' from IP: ${request.ip}.`)
-
-        mysqlConnection.query(
-            
-            'SELECT * FROM `movies` WHERE `movies`.`id` = ?;',
-            
-            [request.params.id],
-
-            (error, movie) => {
-
-                mysqlConnection.query(
-
-                    'SELECT * FROM `reviews` WHERE `reviews`.`movie_id` = ?;',
-
-                    [request.params.id],
-
-                    (error, reviews) => {
-
-                        movie[0].reviews = reviews;
-
-                        response.json(movie[0]);
-
-                    }
-
-                )
-
-            }
-
-        )
-
-    }
-
-)
+server.get('/api/',    moviesController.index);
+server.get('/api/:id', moviesController.show);
 
 
 
