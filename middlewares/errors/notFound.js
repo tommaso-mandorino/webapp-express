@@ -4,7 +4,7 @@ function routeNotFound(request, response, next) {
         {
             error: true,
             errorCode: 404,
-            errorMessage: 'Error 404: route not found.'
+            errorMessage: 'Not Found'
         }
     );
 
