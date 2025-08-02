@@ -1,3 +1,7 @@
+import mysqlConnection from "../database/connection.js";
+
+
+
 function index(request, response) {
 
     console.log(`➕ New request on 'index' route from IP: ${request.ip}.`)
@@ -15,6 +19,8 @@ function index(request, response) {
     )
 
 }
+
+
 
 function show(request, response) {
 
