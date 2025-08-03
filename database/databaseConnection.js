@@ -8,9 +8,10 @@ const mysqlConnectionInformation = {
 
 const mysqlConnection = new mysql2.createConnection(mysqlConnectionInformation);
 
-if (!mysqlConnection)
+if (!mysqlConnection) {
     throw new Error('🚨 Unable to connect to the database.');
-    
+}
+
 console.log('✅ Connected successfully to the database.');
 
 export default mysqlConnection;

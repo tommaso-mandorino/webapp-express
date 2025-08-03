@@ -1,45 +1,20 @@
 import express from 'express';
+import movieRouter from './routers/moviesRouter.js';
+import errorMiddlewares from './middlewares/errorMiddlewares.js';
 
-import movieRouter from './routers/movieRouter.js';
+const app = express();
 
-import routeNotFound from './middlewares/errors/notFound.js';
-import internalServerError from './middlewares/errors/internalServerError.js';
+app.use(express.static('public'));
+app.use('/api/movies', movieRouter);
 
-const SERVER_ADDRESS = process.env.SERVER_ADDRESS;
-const SERVER_PORT = process.env.SERVER_PORT;
+app.get('/', (request, response) => {
+    console.log(`🏠 New request on 'root' route from IP: ${request.ip}.`);
+    response.send('Server is running...');
+});
 
-const server = express();
+app.use(errorMiddlewares.routeNotFound);
+app.use(errorMiddlewares.internalServerError);
 
-server.use(express.static('public'));
-server.use('/api/movies', movieRouter);
-
-
-
-server.get('/',
-
-    (request, response) => {
-
-        console.log(`➕ New request on 'root' route from IP: ${request.ip}.`);
-
-        response.send('Server is running...');
-
-    }
-
-);
-
-
-
-server.use(routeNotFound);
-server.use(internalServerError);
-
-
-
-server.listen(SERVER_PORT,
-
-    () => {
-
-        console.log(`⏳ Server is listening on ${SERVER_ADDRESS}:${SERVER_PORT}...`);
-
-    }
-
-);
+app.listen(process.env.SERVER_PORT, () => {
+    console.log(`⏳ Server is listening on ${process.env.SERVER_ADDRESS}:${process.env.SERVER_PORT}...`);
+});

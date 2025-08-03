@@ -2,9 +2,9 @@
 
 ## Obiettivo
 
-Costruire il `back-end` di una `web app`.
+Costruire il `back-end` di una `Web App`.
 
-### Passaggi del giorno 1
+### Passaggi
 
 #### Base
 
