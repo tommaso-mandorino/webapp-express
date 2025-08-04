@@ -1,17 +1,21 @@
 import mysql2 from 'mysql2';
 
-const mysqlConnectionInformation = {
+const databaseConnectionOptions = {
     user: process.env.DBMS_USER,
     password: process.env.DBMS_PASSWORD,
     database: process.env.DBMS_USE
 }
 
-const mysqlConnection = new mysql2.createConnection(mysqlConnectionInformation);
+const databaseConnection = mysql2.createConnection(databaseConnectionOptions);
 
-if (!mysqlConnection) {
-    throw new Error('🚨 Unable to connect to the database.');
-}
+databaseConnection.connect(error => {
 
-console.log('✅ Connected successfully to the database.');
+    if (error) {
+        throw new Error('🚨 Unable to connect to the database.');
+    }
 
-export default mysqlConnection;
+    console.log(`✅ Successfully connected to '${databaseConnection.config.database}' database on 'http://${databaseConnection.config.host}:${databaseConnection.config.port}' as '${databaseConnection.config.user}' user.`);
+
+});
+
+export default databaseConnection;

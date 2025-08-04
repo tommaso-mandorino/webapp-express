@@ -1,4 +1,4 @@
-import mysqlConnection from "../database/databaseConnection.js";
+import databaseConnection from "../database/databaseConnection.js";
 
 const throwQueryInternalServerError = (request, response) => {
 
@@ -28,7 +28,7 @@ function index(request, response) {
 
     console.log(`📋 New request on 'index' route from IP: ${request.ip}.`);
 
-    mysqlConnection.query('SELECT * FROM `movies`;', (error, moviesArray) => {
+    databaseConnection.query('SELECT * FROM `movies`;', (error, moviesArray) => {
 
             if(error) {
                 return throwQueryInternalServerError(request, response);
@@ -43,7 +43,7 @@ function show(request, response) {
 
     console.log(`👉 New request on 'show' route for resource with ID '${request.params.id}' from IP: ${request.ip}.`);
 
-    mysqlConnection.query('SELECT * FROM `movies` WHERE `movies`.`id` = ?;', [request.params.id], (error, singleMovieInArray) => {
+    databaseConnection.query('SELECT * FROM `movies` WHERE `movies`.`id` = ?;', [request.params.id], (error, singleMovieInArray) => {
 
         if(error) {
             return throwQueryInternalServerError(request, response);
@@ -53,7 +53,7 @@ function show(request, response) {
             return throwIdNotFoundError(request, response);
         }
 
-        mysqlConnection.query('SELECT * FROM `reviews` WHERE `reviews`.`movie_id` = ?;', [request.params.id], (error, reviewsArray) => {
+        databaseConnection.query('SELECT * FROM `reviews` WHERE `reviews`.`movie_id` = ?;', [request.params.id], (error, reviewsArray) => {
 
             if(error) {
                 return throwQueryInternalServerError(request, response);
